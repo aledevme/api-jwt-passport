@@ -1,13 +1,8 @@
 const mongoose = require('mongoose')
-
-const userSchema = mongoose.Schema({
-    name: {
-        type: String,
-        require: true,
-        min: 6,
-        max: 255
-    },
-    email: {
+const bcrypt = require('bcrypt')
+const Schema = mongoose.Schema;
+const userSchema = new Schema({
+    username: {
         type: String,
         require: true,
         min: 6,
@@ -18,10 +13,13 @@ const userSchema = mongoose.Schema({
         require: true,
         minlength: 6
     },
-    date: {
-        type: Date,
-        default: Date.now
-    }
 })
+
+userSchema.methods.isValidPassword = async function(password) {
+    const user = this;
+    const compare = await bcrypt.compare(password, user.password);
+
+    return compare;
+}
 
 module.exports = mongoose.model('User', userSchema)

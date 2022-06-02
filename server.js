@@ -1,15 +1,18 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose")
+const passport = require('./auth/auth');
 const port = 8080;
 const conn_str = 'mongodb+srv://aledevme:c8ldcUVgi9Sh1pZf@cluster0.5v234.mongodb.net/jwt-project?retryWrites=true&w=majority'
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const userRouter = require('./routes/user')
+const authenticationRoutes = require('./routes/user')
+const userRoutes = require('./routes/secures-routes')
 
-app.use('/users', userRouter)
+app.use('/auth', authenticationRoutes)
+app.use('/users', passport.authenticate('jwt', { session: false }), userRoutes)
 
 
 //create a server object:
@@ -26,5 +29,7 @@ app.listen(port, () => {
         }
     );
 
-    if(connection) console.log('api')
+    if(connection) {
+        console.log('Api is working done with connection mongoDB')
+    }
 }); 

@@ -29,5 +29,7 @@ app.listen(port, () => {
         }
     );
 
-    if(connection) console.log('api')
+    if(connection) {
+        console.log('Api is working done with connection mongoDB')
+    }
 }); 

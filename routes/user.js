@@ -24,6 +24,7 @@ async (req, res, next) => {
     'login',
     async (err, user, info) => {
         try {
+        console.log(user)
         if (err || !user) {
             const error = new Error('An error occurred.');
 
@@ -36,7 +37,10 @@ async (req, res, next) => {
             async (error) => {
             if (error) return next(error);
 
-            const body = { _id: user._id, email: user.email };
+            const body = { _id: user._id, username: user.username };
+
+            console.log(body)
+
             const token = jwt.sign({ user: body }, '1234567$.');
 
             return res.json({ token });

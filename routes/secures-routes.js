@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get(
-  '/all',
-  (req, res, next) => {
+router.get( '/all', (req, res, next) => {
     res.json({
       message: 'You made it to the secure route',
       user: req.user,
